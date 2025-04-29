@@ -7,6 +7,12 @@
         "Lendable\\Interview\\": "src/"
       }
     },
+    "require": {
+      "php": ">=8.4"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^10.0"
+    },
     "autoload-dev": {
       "psr-4": {
         "Lendable\\Interview\\": "tests/"

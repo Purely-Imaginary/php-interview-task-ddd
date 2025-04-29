@@ -1,0 +1,10 @@
+# Exclude files and directories from the Docker build context
+# This speeds up the build process and reduces image size if copying code
+
+.git/
+.idea/
+.vscode/
+vendor/
+.dev/ # Exclude the dev environment setup itself if not needed in context
+*.log
+*.tar.gz # Exclude submission archive if generated

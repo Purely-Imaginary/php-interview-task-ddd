@@ -1,0 +1,41 @@
+# Use the official PHP 8.4 CLI image based on Alpine Linux for smaller size
+FROM php:8.4-cli-alpine
+
+# Set working directory
+WORKDIR /app
+
+# --- System Dependencies ---
+# Install system dependencies required by PHP extensions and build tools
+# - icu-dev: for intl extension
+# - libzip-dev: for zip extension
+# - zip/unzip: often needed by composer
+RUN apk add --no-cache \
+    icu-dev \
+    libzip-dev \
+    zip \
+    unzip
+
+# --- PHP Extensions ---
+# Install required PHP extensions
+# - intl: for number formatting (important for currency)
+# - bcmath: for arbitrary precision mathematics (essential for financial calculations)
+# - zip: for composer dependency handling
+RUN docker-php-ext-install \
+    intl \
+    bcmath \
+    zip
+
+# --- Xdebug ---
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS build-base linux-headers \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && apk del .build-deps
+
+# --- Copy Xdebug Configuration ---
+COPY --chown=www-data:www-data .dev/docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+# --- Install Composer ---
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# --- Default Command ---
+CMD ["php", "-v"]

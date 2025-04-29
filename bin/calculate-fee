@@ -1,6 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+use Lendable\Interview\Application\Handler\CalculateFeeHandler;
+use Lendable\Interview\Domain\Model\Loan\Money;
+use Lendable\Interview\Domain\Model\Loan\Term;
+use Lendable\Interview\Domain\Service\FeeCalculator;
+use Lendable\Interview\Domain\Service\InterpolationService;
+use Lendable\Interview\Domain\Service\RoundingService;
+use Lendable\Interview\Infrastructure\Formatting\StandardOutputFormatter;
+use Lendable\Interview\Infrastructure\Persistence\InMemoryFeeStructureRepository;
+
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 /**
@@ -8,5 +17,31 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
  * the contract specified in the README of the test.
  */
 
-$amountString = $argv[1] ?? '';
-$termString = $argv[2] ?? '';
+if ($argc !== 3) {
+    fwrite(STDERR, "Usage: bin/calculate-fee <amount> <term>\n");
+    exit(1);
+}
+
+$amountString = $argv[1];
+$termString = $argv[2];
+
+$repository = new InMemoryFeeStructureRepository();
+$interpolationService = new InterpolationService();
+$roundingService = new RoundingService();
+$calculator = new FeeCalculator($interpolationService, $roundingService);
+$handler = new CalculateFeeHandler($repository, $calculator);
+$formatter = new StandardOutputFormatter();
+
+try {
+    $moneyVO = Money::fromDecimalString($amountString);
+    $termVO = Term::fromMonths((int) $termString);
+    $fee = $handler->handle($moneyVO, $termVO);
+    $formattedFee = $formatter->format($fee);
+    fwrite(STDOUT, $formattedFee."\n");
+
+    exit(0);
+} catch (\Throwable $e) { // Catching all for simplicity, we could handle different exceptions differently
+    fwrite(STDERR, $e->getMessage()."\n");
+    exit(1);
+}
+

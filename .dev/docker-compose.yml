@@ -1,0 +1,12 @@
+services:
+  calculator:
+    build:
+      context: ..
+      dockerfile: .dev/Dockerfile
+    image: lendable/fee-calculator:dev
+    volumes:
+      - ..:/app:cached
+    working_dir: /app
+
+    environment:
+      - PHP_IDE_CONFIG=serverName=fee-calculator

@@ -5,7 +5,7 @@ namespace Lendable\Interview\Domain\Service;
 use Lendable\Interview\Domain\Model\Fee\Breakpoint;
 use Lendable\Interview\Domain\Model\Loan\Money;
 
-final class RoundingService
+final class RoundingService implements \Lendable\Interview\Domain\Service\RoundingServiceInterface
 {
     private const int DIVISOR = 5_00;
 

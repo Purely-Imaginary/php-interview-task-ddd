@@ -2,7 +2,6 @@
 
 namespace Lendable\Interview\Domain\Service;
 
-use Lendable\Interview\Domain\Model\Fee\Breakpoint;
 use Lendable\Interview\Domain\Model\Fee\FeeStructure;
 use Lendable\Interview\Domain\Model\Loan\Loan;
 use Lendable\Interview\Domain\Model\Loan\Money;
@@ -10,8 +9,8 @@ use Lendable\Interview\Domain\Model\Loan\Money;
 final class FeeCalculator
 {
     public function __construct(
-        private readonly InterpolationService $interpolationService,
-        private readonly RoundingService $roundingService
+        private readonly InterpolationServiceInterface $interpolationService,
+        private readonly RoundingServiceInterface $roundingService
     ) {
     }
 

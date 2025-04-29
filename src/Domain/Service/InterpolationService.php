@@ -5,7 +5,7 @@ namespace Lendable\Interview\Domain\Service;
 use Lendable\Interview\Domain\Model\Fee\Breakpoint;
 use Lendable\Interview\Domain\Model\Loan\Money;
 
-final class InterpolationService
+final class InterpolationService implements \Lendable\Interview\Domain\Service\InterpolationServiceInterface
 {
     // Values in between the breakpoints should be interpolated linearly
     // between the lower bound and upper bound that they fall between.

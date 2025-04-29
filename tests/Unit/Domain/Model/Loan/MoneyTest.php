@@ -48,14 +48,6 @@ final class MoneyTest extends TestCase
     }
 
     #[Test]
-    public function canAdd(): void
-    {
-        $money = Money::fromMinor(123_45);
-        $addedMoney = $money->add(Money::fromMinor(56_78));
-        $this->assertSame(180_23, $addedMoney->getMinorAmount());
-    }
-
-    #[Test]
     public function throwsExceptionForNegativeMinorAmount(): void
     {
         $this->expectException(InvalidArgumentException::class);

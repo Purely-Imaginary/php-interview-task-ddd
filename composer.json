@@ -1,0 +1,15 @@
+{
+    "name": "lendable/interview",
+    "type": "project",
+    "bin": "/bin/calculate-fee",
+    "autoload": {
+      "psr-4": {
+        "Lendable\\Interview\\": "src/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Lendable\\Interview\\": "tests/"
+      }
+    }
+}

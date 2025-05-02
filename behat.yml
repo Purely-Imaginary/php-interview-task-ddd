@@ -1,0 +1,11 @@
+# behat.yml
+default:
+  suites:
+    default:
+      paths:
+        - '%paths.base%/tests/Behat/Features'
+      contexts:
+        - Lendable\Interview\Tests\Behat\Context\FeeCalculationContext
+
+  formatters:
+    pretty: true

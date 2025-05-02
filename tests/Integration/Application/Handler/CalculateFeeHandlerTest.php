@@ -9,7 +9,7 @@ use Lendable\Interview\Domain\Exception\InvalidLoanAmountException;
 use Lendable\Interview\Domain\Model\Loan\Money;
 use Lendable\Interview\Domain\Model\Loan\Term;
 use Lendable\Interview\Domain\Service\FeeCalculator;
-use Lendable\Interview\Domain\Service\InterpolationService;
+use Lendable\Interview\Domain\Service\InterpolationFeeStrategy;
 use Lendable\Interview\Domain\Service\RoundingService;
 use Lendable\Interview\Infrastructure\Persistence\InMemoryFeeStructureRepository;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -25,7 +25,7 @@ final class CalculateFeeHandlerTest extends TestCase
         parent::setUp();
 
         $repository = new InMemoryFeeStructureRepository();
-        $interpolationService = new InterpolationService();
+        $interpolationService = new InterpolationFeeStrategy();
         $roundingService = new RoundingService();
         $calculator = new FeeCalculator(
             $interpolationService,

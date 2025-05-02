@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Lendable\Interview\Domain\Service;
 
-use Lendable\Interview\Domain\Model\Fee\Breakpoint;
+use Lendable\Interview\Domain\Model\Fee\FeeStructure;
+use Lendable\Interview\Domain\Model\Loan\Loan;
 use Lendable\Interview\Domain\Model\Loan\Money;
 
-final class InterpolationService implements \Lendable\Interview\Domain\Service\InterpolationServiceInterface
+final class InterpolationFeeStrategy implements FeeCalculationStrategyInterface
 {
     // Values in between the breakpoints should be interpolated linearly
     // between the lower bound and upper bound that they fall between.
-    public function interpolate(Money $loanAmount, Breakpoint $lower, Breakpoint $upper): Money
+    public function calculateBaseFee(Loan $loan, FeeStructure $feeStructure): Money
     {
+        ['lower' => $lower, 'upper' => $upper] = $feeStructure->findBoundaryBreakpoints($loan->getAmount());
+        $loanAmount = $loan->getAmount();
         $interpolationRange = $upper->amount->getMinorAmount() - $lower->amount->getMinorAmount();
         $interpolationPoint = $loanAmount->getMinorAmount() - $lower->amount->getMinorAmount();
         if ($interpolationRange === 0) {

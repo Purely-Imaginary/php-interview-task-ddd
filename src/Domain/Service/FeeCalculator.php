@@ -11,8 +11,8 @@ use Lendable\Interview\Domain\Model\Loan\Money;
 final readonly class FeeCalculator
 {
     public function __construct(
-        private InterpolationServiceInterface $interpolationService,
-        private RoundingServiceInterface $roundingService
+        private FeeCalculationStrategyInterface $feeCalculationStrategy,
+        private RoundingServiceInterface        $roundingService
     ) {
     }
 
@@ -23,11 +23,7 @@ final readonly class FeeCalculator
             throw new \InvalidArgumentException('Loan and fee structures must have the same term.');
         }
 
-        ['lower' => $lower, 'upper' => $upper] = $feeStructure->findBoundaryBreakpoints($loan->getAmount());
-
-        $baseFee = $lower->amount->equals($upper->amount) ?
-            $lower->fee :
-            $this->interpolationService->interpolate($loan->getAmount(), $lower, $upper);
+        $baseFee = $this->feeCalculationStrategy->calculateBaseFee($loan, $feeStructure);
 
         return $this->roundingService->roundFee($loan->getAmount(), $baseFee);
     }

@@ -15,12 +15,15 @@ use Lendable\Interview\Domain\Service\FeeCalculator;
 use Lendable\Interview\Domain\Service\RoundingServiceInterface;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\Exception;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class FeeCalculatorTest extends TestCase
 {
-    private FeeCalculationStrategyInterface $strategyMock;
-    private RoundingServiceInterface $roundingMock;
+    private MockObject $strategyMock;
+
+    private MockObject $roundingMock;
+
     private FeeCalculator $feeCalculator;
 
     /**

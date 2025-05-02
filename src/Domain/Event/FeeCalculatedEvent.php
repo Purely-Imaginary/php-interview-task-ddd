@@ -16,8 +16,7 @@ final class FeeCalculatedEvent extends Event
     public function __construct(
         private readonly Loan  $loan,
         private readonly Money $calculatedFee
-    )
-    {
+    ) {
     }
 
     public function getLoan(): Loan

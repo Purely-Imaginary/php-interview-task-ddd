@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lendable\Interview\Tests\Behat\Context;
+namespace Lendable\Interview\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use PHPUnit\Framework\Assert;
@@ -13,8 +13,10 @@ use PHPUnit\Framework\Assert;
 class FeeCalculationContext implements Context
 {
     private ?string $output = null;
+
     private ?int $exitCode = null;
-    private string $projectRoot;
+
+    private readonly string $projectRoot;
 
     public function __construct()
     {
@@ -62,7 +64,8 @@ class FeeCalculationContext implements Context
      */
     public function theCommandShouldFail(): void
     {
-        Assert::assertNotSame(0, $this->exitCode, "Command unexpectedly succeeded (exit code 0). Output:\n{$this->output}");
+        Assert::assertNotSame(0, $this->exitCode, 'Command unexpectedly succeeded (exit code 0). Output:
+' . $this->output);
     }
 
     /**
@@ -79,6 +82,6 @@ class FeeCalculationContext implements Context
     public function theErrorOutputShouldContain(string $errorMessageSnippet): void
     {
         Assert::assertNotNull($this->output, "Command produced no output.");
-        Assert::assertStringContainsString($errorMessageSnippet, $this->output, "Output did not contain the expected error message snippet.");
+        Assert::assertMatchesRegularExpression('/' . $errorMessageSnippet . '/', $this->output, "Output did not match the expected error message pattern.");
     }
 }

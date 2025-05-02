@@ -26,8 +26,8 @@ Feature: Fee Calculation Command
     And the error output should contain "<Error Message Snippet>"
 
     Examples:
-      | Amount    | Term | Error Message Snippet           |
-      | 999.99    | 12   | Loan amount.*not supported      |
-      | 20000.01  | 24   | Loan amount.*not supported      |
-      | 1000.00   | 13   | Term 13 months is not supported |
-      | abc       | 12   | Invalid decimal string          |
+      | Amount    | Term | Error Message Snippet             |
+      | 999.99    | 12   | Loan amount .* not supported      |
+      | 20000.01  | 24   | Loan amount .* not supported      |
+      | 1000.00   | 13   | Term 13 months is not supported   |
+      | abc       | 12   | Invalid decimal string            |

@@ -34,13 +34,15 @@
     "rector-fix": "vendor/bin/rector process",
     "phpstan": "vendor/bin/phpstan analyse --memory-limit=-1 --no-progress",
     "cs-fixer-fix": "PHP_CS_FIXER_IGNORE_ENV=true vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-    "test": "vendor/bin/phpunit",
+    "phpunit-test": "vendor/bin/phpunit",
+    "behat-test": "vendor/bin/behat -f progress",
 
     "check-all": [
       "@cs-fixer-fix",
       "@rector-fix",
       "@phpstan",
-      "@test"
+      "@phpunit-test",
+      "@behat-test"
     ]
   }
 }

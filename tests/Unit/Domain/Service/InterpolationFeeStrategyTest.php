@@ -46,6 +46,9 @@ final class InterpolationFeeStrategyTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<Breakpoint> $breakpointsArray
+     */
     #[DataProvider('interpolationDataProvider')]
     #[Test]
     public function testCalculateBaseFeeInterpolatesCorrectly(

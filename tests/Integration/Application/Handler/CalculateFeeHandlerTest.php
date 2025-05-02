@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lendable\Interview\Tests\Integration\Application\Handler;
+namespace Lendable\Interview\Integration\Application\Handler;
 
 use Lendable\Interview\Application\Handler\CalculateFeeHandler;
 use Lendable\Interview\Domain\Exception\InvalidLoanAmountException;
@@ -15,6 +15,7 @@ use Lendable\Interview\Infrastructure\Persistence\InMemoryFeeStructureRepository
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 final class CalculateFeeHandlerTest extends TestCase
 {
@@ -24,14 +25,18 @@ final class CalculateFeeHandlerTest extends TestCase
     {
         parent::setUp();
 
-        $repository = new InMemoryFeeStructureRepository();
         $interpolationService = new InterpolationFeeStrategy();
         $roundingService = new RoundingService();
         $calculator = new FeeCalculator(
             $interpolationService,
             $roundingService
         );
-        $this->handler = new CalculateFeeHandler($repository, $calculator);
+
+        $this->handler = new CalculateFeeHandler(
+            new InMemoryFeeStructureRepository(),
+            $calculator,
+            new EventDispatcher()
+        );
     }
 
     /**

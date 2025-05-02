@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Domain\Model\Loan;
 
 use Lendable\Interview\Domain\Exception\TermNotSupportedException;

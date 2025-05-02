@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Lendable\Interview\Unit\Domain\Service;
 
 use InvalidArgumentException;
-use Lendable\Interview\Domain\Exception\TermNotSupportedException;
 use Lendable\Interview\Domain\Model\Fee\Breakpoint;
 use Lendable\Interview\Domain\Model\Fee\FeeStructure;
 use Lendable\Interview\Domain\Model\Loan\Loan;
 use Lendable\Interview\Domain\Model\Loan\Money;
 use Lendable\Interview\Domain\Model\Loan\Term;
 use Lendable\Interview\Domain\Service\FeeCalculator;
-use Lendable\Interview\Domain\Service\InterpolationService;
 use Lendable\Interview\Domain\Service\InterpolationServiceInterface;
-use Lendable\Interview\Domain\Service\RoundingService;
 use Lendable\Interview\Domain\Service\RoundingServiceInterface;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Tests\Functional;
 
 use PHPUnit\Framework\Attributes\Test;
@@ -7,6 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 final class CalculateFeeCommandTest extends TestCase
 {
+    /**
+     * @param array<string> $args
+     * @return array<string, int|string>
+     */
     private function executeCommand(array $args): array
     {
         $command = sprintf(

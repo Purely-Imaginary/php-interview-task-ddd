@@ -34,6 +34,9 @@ final class CalculateFeeHandlerTest extends TestCase
         $this->handler = new CalculateFeeHandler($repository, $calculator);
     }
 
+    /**
+     * @return array<string, array{string, int, int}>
+     */
     public static function successfulCalculationProvider(): array
     {
         // [amountString, termMonths, expectedFeeMinor]
@@ -67,6 +70,9 @@ final class CalculateFeeHandlerTest extends TestCase
         ));
     }
 
+    /**
+     * @return array<string, array{string, int}>
+     */
     public static function invalidAmountProvider(): array
     {
         // [amountString, termMonths]

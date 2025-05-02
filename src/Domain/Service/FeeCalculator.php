@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Domain\Service;
 
 use Lendable\Interview\Domain\Model\Fee\FeeStructure;
 use Lendable\Interview\Domain\Model\Loan\Loan;
 use Lendable\Interview\Domain\Model\Loan\Money;
 
-final class FeeCalculator
+final readonly class FeeCalculator
 {
     public function __construct(
-        private readonly InterpolationServiceInterface $interpolationService,
-        private readonly RoundingServiceInterface $roundingService
+        private InterpolationServiceInterface $interpolationService,
+        private RoundingServiceInterface $roundingService
     ) {
     }
 

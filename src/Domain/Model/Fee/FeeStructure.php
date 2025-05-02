@@ -1,25 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Domain\Model\Fee;
 
 use Lendable\Interview\Domain\Model\Loan\Money;
 use Lendable\Interview\Domain\Model\Loan\Term;
 
-final class FeeStructure
+final readonly class FeeStructure
 {
     public function __construct(
-        private readonly Term $term,
+        private Term $term,
         /** @var Breakpoint[] */
-        private readonly array $breakpoints
+        private array $breakpoints
     ) {
-        if (empty($breakpoints)) {
+        if ($breakpoints === []) {
             throw new \InvalidArgumentException('At least one breakpoint must be provided.');
-        }
-
-        foreach ($breakpoints as $breakpoint) {
-            if (!$breakpoint instanceof Breakpoint) {
-                throw new \InvalidArgumentException('All breakpoints must be instances of Breakpoint class.');
-            }
         }
     }
 
@@ -42,12 +38,14 @@ final class FeeStructure
                     'upper' => $breakpoint
                 ];
             }
+
             if ($loanAmount->isLessThan($breakpoint->amount)) {
                 return [
                     'lower' => $lowerBound,
                     'upper' => $breakpoint
                 ];
             }
+
             $lowerBound = $breakpoint;
         }
 

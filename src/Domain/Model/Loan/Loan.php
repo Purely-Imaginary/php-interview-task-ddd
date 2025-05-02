@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Domain\Model\Loan;
 
 use Lendable\Interview\Domain\Exception\InvalidLoanAmountException;
@@ -7,6 +9,7 @@ use Lendable\Interview\Domain\Exception\InvalidLoanAmountException;
 final readonly class Loan
 {
     private const int MINIMUM_AMOUNT = 1000_00;
+
     private const int MAXIMUM_AMOUNT = 20000_00;
 
     public function __construct(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Application\Handler;
 
 use Lendable\Interview\Domain\Exception\FeeStructureNotFoundException;
@@ -9,11 +11,11 @@ use Lendable\Interview\Domain\Model\Loan\Term;
 use Lendable\Interview\Domain\Repository\FeeStructureRepository;
 use Lendable\Interview\Domain\Service\FeeCalculator;
 
-final class CalculateFeeHandler
+final readonly class CalculateFeeHandler
 {
     public function __construct(
-        private readonly FeeStructureRepository $feeStructureRepository,
-        private readonly FeeCalculator $feeCalculator,
+        private FeeStructureRepository $feeStructureRepository,
+        private FeeCalculator $feeCalculator,
     ) {
     }
 
@@ -22,7 +24,7 @@ final class CalculateFeeHandler
         $loan = new Loan($money, $term); // This implicitly validates the amount
 
         $feeStructure = $this->feeStructureRepository->findForTerm($term);
-        if ($feeStructure === null) {
+        if (!$feeStructure instanceof \Lendable\Interview\Domain\Model\Fee\FeeStructure) {
             throw new FeeStructureNotFoundException($term->inMonths());
         }
 

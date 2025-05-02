@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Domain\Model\Loan;
 
 final readonly class Money
@@ -45,16 +47,16 @@ final readonly class Money
 
     public function isLessThan(Money $amount): bool
     {
-        return $this->getMinorAmount() < $amount->getMinorAmount();
+        return $this->minorAmount < $amount->getMinorAmount();
     }
 
     public function isGreaterThan(Money $amount): bool
     {
-        return $this->getMinorAmount() > $amount->getMinorAmount();
+        return $this->minorAmount > $amount->getMinorAmount();
     }
 
     public function add(Money $amount): Money
     {
-        return self::fromMinor($this->getMinorAmount() + $amount->getMinorAmount());
+        return self::fromMinor($this->minorAmount + $amount->getMinorAmount());
     }
 }

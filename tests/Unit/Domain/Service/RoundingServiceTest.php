@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Lendable\Interview\Unit\Domain\Service;
 
-use InvalidArgumentException;
-use Lendable\Interview\Domain\Exception\TermNotSupportedException;
 use Lendable\Interview\Domain\Model\Loan\Money;
-use Lendable\Interview\Domain\Model\Loan\Term;
 use Lendable\Interview\Domain\Service\RoundingService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -15,6 +12,9 @@ use PHPUnit\Framework\TestCase;
 
 final class RoundingServiceTest extends TestCase
 {
+    /**
+     * @return array<string,array{int, int, int}>
+     */
     public static function roundingDataProvider(): array
     {
         // [loanAmountMinor, calculatedFeeMinor, expectedFeeMinor]

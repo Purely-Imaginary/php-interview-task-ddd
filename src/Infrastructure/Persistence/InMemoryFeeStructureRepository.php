@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lendable\Interview\Infrastructure\Persistence;
 
 use Lendable\Interview\Domain\Model\Fee\Breakpoint;
@@ -10,6 +12,7 @@ use Lendable\Interview\Domain\Repository\FeeStructureRepository;
 
 final class InMemoryFeeStructureRepository implements FeeStructureRepository
 {
+    /** @var array<int, array{array{int,int}}> */
     private array $feeStructures = [
         // Term => [ [amount, fee], [amount, fee], ... ]
         Term::MONTHS_12->value => [
@@ -58,7 +61,11 @@ final class InMemoryFeeStructureRepository implements FeeStructureRepository
         ],
     ];
 
-    private array $structures; // simple caching for findForTerm()
+    public function __construct(
+        /** @var array<int, FeeStructure> */
+        private array $structures = [] // Simple caching for structures
+    ) {
+    }
 
     public function findForTerm(Term $term): ?FeeStructure
     {
@@ -77,7 +84,7 @@ final class InMemoryFeeStructureRepository implements FeeStructureRepository
         }
 
         // SUPER IMPORTANT: sort the breakpoints by amount so that we can interpolate the fee to be 10000% sure
-        usort($breakpoints, function(Breakpoint $a, Breakpoint $b): int {
+        usort($breakpoints, function (Breakpoint $a, Breakpoint $b): int {
             return $a->amount->getMinorAmount() <=> $b->amount->getMinorAmount(); // Spaceship operator for comparison <3
         });
 

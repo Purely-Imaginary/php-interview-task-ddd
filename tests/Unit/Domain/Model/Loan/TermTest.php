@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Lendable\Interview\Unit\Domain\Model\Loan;
 
-use InvalidArgumentException;
 use Lendable\Interview\Domain\Exception\TermNotSupportedException;
-use Lendable\Interview\Domain\Model\Loan\Money;
 use Lendable\Interview\Domain\Model\Loan\Term;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -24,6 +22,9 @@ final class TermTest extends TestCase
         Term::fromMonths($invalidValue);
     }
 
+    /**
+     * @return array<string,array<int>>
+     */
     public static function invalidMonthsProvider(): array
     {
         return [
@@ -33,6 +34,7 @@ final class TermTest extends TestCase
             'way too high' => [500],
         ];
     }
+
     #[Test]
     public function canCreateTermWith12Months(): void
     {

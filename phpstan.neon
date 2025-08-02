@@ -5,7 +5,3 @@ parameters:
         - tests
         # Add bin/calculate-fee if you want to analyze it, might need bootstrap setup
     ignoreErrors:
-
-    # If your bin script needs bootstrapping for analysis (e.g., for DI):
-    # bootstrapFiles:
-    #    - bin/bootstrap.php # We'll create this later for DI

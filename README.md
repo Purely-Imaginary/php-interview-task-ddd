@@ -1,137 +1,118 @@
-Lendable Interview Test - Fee Calculation
-=========================================
+# Fee Calculator
 
-## Background
+A command-line tool for calculating loan fees based on loan amount and term.
 
-This test is designed to evaluate your problem-solving approach and engineering ability. Design your solution to
-demonstrate your knowledge of OOP concepts, SOLID principles, design patterns, domain-driven design and clean and
-extensible architecture.
+## Description
 
-A strong submission will demonstrate a solid grasp of these fundamentals as a set of well-designed classes and will be
-documented and executable with elegant tests.
+This application calculates the appropriate fee for a loan based on a fee structure and a set of rules. The fee calculation is based on:
 
-Please note that the main interface of this test is a single console script entrypoint and it is used to review your
-solution programmatically. The `bin/calculate-fee` command **SHOULD** only be used for bootstrapping and running your
-solution, therefore is expected most of your code will live in the `src` and `tests` folders.
+- The loan amount (between £1,000 and £20,000)
+- The loan term (either 12 or 24 months)
+- A predefined fee structure with breakpoints
+- Linear interpolation for values between breakpoints
+- Rounding rules to ensure the sum of the fee and loan amount is divisible by £5
 
-You **MAY** use any libraries that add value to your solution but please **DO NOT** include a whole web framework (AKA
-Symfony, Laravel, etc) into the test as it is not needed. We don't expect you to use any infrastructure,
-like a database, for this test.
+## Requirements
 
-You **MAY** provide us with a development docker (compose) setup if you are comfortable writing your code in a
-containerized environment and if you want to showcase your docker abilities; but please note this is for your own use
-as a dev environment, so let this not distract you from the main goal of this test.
+- PHP 8.4 or higher
+- Composer
 
-Please note that your solution will be run with PHP 8.4. You *MAY* use any version you want to develop your solution as
-long as it is backward compatible with the aforementioned version, but please note you are encouraged to use the
-latest features of the language.
+## Installation
 
-You also **MAY** consider including a README that provides a high-level overview of your approach to the problem and
-your solution.
+1. Clone the repository:
+   ```
+   git clone [repository-url]
+   ```
 
-## The Test
+2. Install dependencies:
+   ```
+   composer install
+   ```
 
-The requirement is to build a fee calculator that given a monetary **amount** and a **term** (the contractual duration
-of the loan, expressed as a number of months) will produce an appropriate **fee** for a loan based on a fee structure
-and a set of rules described below.
+## Usage
 
-The calculator **MUST** be implemented as a CLI tool using the provided `bin/calculate-fee` script. It must take the
-mentioned **amount** and **term** as the only arguments and in that order. (Ex: `bin/calculate-fee 20,000.00 24`).
+Run the calculator with the loan amount and term as arguments:
 
-Upon successful execution, the script **MUST** print the resulting **fee** to `stdout` followed by a line feed (`\n`) and
-exit with status code `zero`. The fee must be formatted numerically, with two decimal places and with no currency
-identifiers or symbols (Ex: `1,223.44`). Supporting different currencies is not required as we only care about monetary
-amounts.
+```
+bin/calculate-fee <amount> <term>
+```
 
-Upon failure, the script must print any errors to `stderr` and exit with status code `non-zero`.
+Where:
+- `<amount>` is the loan amount in GBP (between £1,000 and £20,000)
+- `<term>` is the loan term in months (either 12 or 24)
 
-In terms of the business logic, implement your solution such that it fulfils the following requirements / premises:
+### Examples
 
-- The fee structure does not follow a formula.
-- Values in between the breakpoints should be interpolated linearly between the lower bound and upper bound that they fall between.
-- The number of breakpoints, their values, or storage might change.
-- The term can be either 12 or 24 (the number of months). You can also assume values will always be within this set.
-- The fee should be rounded up such that the sum of the fee and the loan amount is exactly divisible by £5.
-- The minimum amount for a loan is £1,000, and the maximum is £20,000.
-- You can assume values will always be within this range but **there may be any values up to 2 decimal places**.
+```
+bin/calculate-fee 11500.00 24
+```
+Output: `460.00`
 
-Example inputs/outputs:
+```
+bin/calculate-fee 19250.00 12
+```
+Output: `385.00`
 
-| Loan Amount (in GBP) | Term (in Months) | Fee (in GBP) |
-|----------------------|------------------|--------------|
-| 11,500.00            | 24               | 460.00       |
-| 19,250.00            | 12               | 385.00       |
+## Fee Structure
 
-# Fee Structure
+The fee structure is based on breakpoints for different loan amounts and terms. Values between breakpoints are interpolated linearly.
 
-The fee structure doesn't follow particular algorithm and it is possible that same fee will be applicable for different
-amounts.
-
-You can assume the fee structure is in Pounds Stirling (GBP), although this is of little importance for the test.
-
-### Term 12 Breakpoints
-
+### Term 12 Months
 | Amount | Fee |
 |--------|-----|
 | 1,000  | 50  |
 | 2,000  | 90  |
 | 3,000  | 90  |
-| 4,000  | 115 |
-| 5,000  | 100 |
-| 6,000  | 120 |
-| 7,000  | 140 |
-| 8,000  | 160 |
-| 9,000  | 180 |
-| 10,000 | 200 |
-| 11,000 | 220 |
-| 12,000 | 240 |
-| 13,000 | 260 |
-| 14,000 | 280 |
-| 15,000 | 300 |
-| 16,000 | 320 |
-| 17,000 | 340 |
-| 18,000 | 360 |
-| 19,000 | 380 |
+| ...    | ... |
 | 20,000 | 400 |
 
-
-### Term 24 Breakpoints
-
+### Term 24 Months
 | Amount | Fee |
 |--------|-----|
 | 1,000  | 70  |
 | 2,000  | 100 |
 | 3,000  | 120 |
-| 4,000  | 160 |
-| 5,000  | 200 |
-| 6,000  | 240 |
-| 7,000  | 280 |
-| 8,000  | 320 |
-| 9,000  | 360 |
-| 10,000 | 400 |
-| 11,000 | 440 |
-| 12,000 | 480 |
-| 13,000 | 520 |
-| 14,000 | 560 |
-| 15,000 | 600 |
-| 16,000 | 640 |
-| 17,000 | 680 |
-| 18,000 | 720 |
-| 19,000 | 760 |
+| ...    | ... |
 | 20,000 | 800 |
 
-# Submitting Your Solution
+For the complete fee structure, see the [Task Description](taskDescription.md).
 
-You **SHOULD NOT** unnecessarily modify the directory structure of your test. Specially, **DO NOT** move the
-`bin/calculate-fee` command nor the `composer.json` from the root directory of your submission, as they are used to
-test your submission automatically.
+## Project Structure
 
-If you need to include other files (like docker setup, fixtures, etc) and you feel they would clutter the root
-directory, then you can place those files in a `.dev` folder inside the root directory.
+- `bin/` - Contains the CLI script
+- `src/` - Source code
+  - `Application/` - Application layer (handlers, services)
+  - `Domain/` - Domain layer (models, services)
+  - `Infrastructure/` - Infrastructure layer
+- `tests/` - Test files
+  - `Behat/` - Behat tests
+  - `Unit/` - PHPUnit tests
+  - `Functional/` - Functional tests
+  - `Integration/` - Integration tests
+- `config/` - Configuration files
 
-If your solution ends up not being runnable by our automated system due to not following these instructions then you
-risk failing your test.
+## Development
 
-Please **DO NOT** make a public repository for your solution as **we will instantly fail you**. Instead, when you are
-done working with your solution, simply run the `bin/submit` script provided. This will pack your solution into a
-tarball that you must send to us. You risk failing your test if you send your solution in a different way.
+### Running Tests
+
+```
+composer run phpunit-test  # Run PHPUnit tests
+composer run behat-test    # Run Behat tests
+```
+
+### Code Quality Tools
+
+```
+composer run cs-fixer-fix  # Fix code style issues
+composer run rector-fix    # Apply automatic code refactoring
+composer run phpstan       # Run static analysis
+composer run check-all     # Run all checks and tests
+```
+
+## Rules
+
+- The fee structure does not follow a formula
+- Values between breakpoints are interpolated linearly
+- The fee is rounded up so that (loan amount + fee) is divisible by £5
+- Loan amount must be between £1,000 and £20,000
+- Loan term must be either 12 or 24 months

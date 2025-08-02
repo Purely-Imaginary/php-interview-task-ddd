@@ -1,23 +1,70 @@
-# Fee Calculator
+# Loan Fee Calculator - Showcase of Modern PHP Development
 
-A command-line tool for calculating loan fees based on loan amount and term.
+A sophisticated command-line application demonstrating advanced PHP development practices through a loan fee calculation system.
 
-## Description
+## Project Overview
 
-This application calculates the appropriate fee for a loan based on a fee structure and a set of rules. The fee calculation is based on:
+This project showcases my expertise in building robust, maintainable PHP applications using modern software engineering principles. It implements a loan fee calculator that determines appropriate fees based on loan amount and term, following specific business rules.
 
-- The loan amount (between £1,000 and £20,000)
-- The loan term (either 12 or 24 months)
-- A predefined fee structure with breakpoints
+### Key Technical Highlights
+
+- **Clean Architecture** with clear separation of concerns (Domain, Application, Infrastructure layers)
+- **Domain-Driven Design (DDD)** principles for modeling complex business logic
+- **SOLID principles** throughout the codebase
+- **Design Patterns** including Strategy, Repository, and Factory patterns
+- **Comprehensive Testing** with Unit, Integration, Functional, and BDD tests
+- **Modern PHP 8.4** features and type safety
+- **Dependency Injection** for loose coupling and testability
+- **Event-driven architecture** for extensibility
+
+## Business Problem Solved
+
+The application calculates loan fees based on:
+
+- Loan amounts between £1,000 and £20,000
+- Loan terms of either 12 or 24 months
+- Complex fee structure with breakpoints
 - Linear interpolation for values between breakpoints
-- Rounding rules to ensure the sum of the fee and loan amount is divisible by £5
+- Special rounding rules ensuring the sum of loan amount and fee is divisible by £5
 
-## Requirements
+## Technical Implementation
+
+### Architecture
+
+The project follows a clean, layered architecture:
+
+- **Domain Layer**: Contains the core business logic, entities, value objects, and domain services
+- **Application Layer**: Orchestrates the use cases and application flow
+- **Infrastructure Layer**: Provides implementations for interfaces defined in the domain
+
+This architecture ensures the business logic remains isolated from external concerns, making the system more maintainable and testable.
+
+### Code Quality & Best Practices
+
+- **Type Safety**: Strict typing throughout the codebase
+- **Immutable Objects**: Value objects with immutability for safer code
+- **Interface Segregation**: Well-defined interfaces with single responsibilities
+- **Dependency Inversion**: High-level modules depend on abstractions
+- **Command-Query Separation**: Clear distinction between commands and queries
+- **Automated Code Quality Tools**: PHPStan, PHP-CS-Fixer, and Rector
+
+### Testing Strategy
+
+The project demonstrates a comprehensive testing approach:
+
+- **Unit Tests**: Testing individual components in isolation
+- **Integration Tests**: Testing interactions between components
+- **Functional Tests**: Testing application functionality as a whole
+- **Behavior-Driven Tests**: Using Behat for acceptance testing
+
+## Usage
+
+### Requirements
 
 - PHP 8.4 or higher
 - Composer
 
-## Installation
+### Installation
 
 1. Clone the repository:
    ```
@@ -29,9 +76,7 @@ This application calculates the appropriate fee for a loan based on a fee struct
    composer install
    ```
 
-## Usage
-
-Run the calculator with the loan amount and term as arguments:
+### Running the Application
 
 ```
 bin/calculate-fee <amount> <term>
@@ -41,7 +86,7 @@ Where:
 - `<amount>` is the loan amount in GBP (between £1,000 and £20,000)
 - `<term>` is the loan term in months (either 12 or 24)
 
-### Examples
+#### Examples
 
 ```
 bin/calculate-fee 11500.00 24
@@ -53,66 +98,47 @@ bin/calculate-fee 19250.00 12
 ```
 Output: `385.00`
 
-## Fee Structure
-
-The fee structure is based on breakpoints for different loan amounts and terms. Values between breakpoints are interpolated linearly.
-
-### Term 12 Months
-| Amount | Fee |
-|--------|-----|
-| 1,000  | 50  |
-| 2,000  | 90  |
-| 3,000  | 90  |
-| ...    | ... |
-| 20,000 | 400 |
-
-### Term 24 Months
-| Amount | Fee |
-|--------|-----|
-| 1,000  | 70  |
-| 2,000  | 100 |
-| 3,000  | 120 |
-| ...    | ... |
-| 20,000 | 800 |
-
-For the complete fee structure, see the [Task Description](taskDescription.md).
-
-## Project Structure
-
-- `bin/` - Contains the CLI script
-- `src/` - Source code
-  - `Application/` - Application layer (handlers, services)
-  - `Domain/` - Domain layer (models, services)
-  - `Infrastructure/` - Infrastructure layer
-- `tests/` - Test files
-  - `Behat/` - Behat tests
-  - `Unit/` - PHPUnit tests
-  - `Functional/` - Functional tests
-  - `Integration/` - Integration tests
-- `config/` - Configuration files
-
-## Development
-
-### Running Tests
+### Development Tools
 
 ```
 composer run phpunit-test  # Run PHPUnit tests
 composer run behat-test    # Run Behat tests
-```
-
-### Code Quality Tools
-
-```
 composer run cs-fixer-fix  # Fix code style issues
 composer run rector-fix    # Apply automatic code refactoring
 composer run phpstan       # Run static analysis
 composer run check-all     # Run all checks and tests
 ```
 
-## Rules
+## Project Structure
 
-- The fee structure does not follow a formula
-- Values between breakpoints are interpolated linearly
-- The fee is rounded up so that (loan amount + fee) is divisible by £5
-- Loan amount must be between £1,000 and £20,000
-- Loan term must be either 12 or 24 months
+```
+├── bin/                  # CLI scripts
+├── src/                  # Source code
+│   ├── Application/      # Application services, handlers
+│   ├── Domain/           # Business logic, entities, value objects
+│   │   ├── Event/        # Domain events
+│   │   ├── Exception/    # Domain-specific exceptions
+│   │   ├── Model/        # Domain models and value objects
+│   │   ├── Repository/   # Data access interfaces
+│   │   └── Service/      # Domain services
+│   └── Infrastructure/   # External concerns, implementations
+├── tests/                # Test suite
+│   ├── Behat/            # BDD tests
+│   ├── Functional/       # Functional tests
+│   ├── Integration/      # Integration tests
+│   └── Unit/             # Unit tests
+└── config/               # Configuration files
+```
+
+## About the Author
+
+This project demonstrates my commitment to software craftsmanship and modern PHP development practices. I focus on creating maintainable, testable, and robust applications by applying industry best practices and design principles.
+
+My expertise includes:
+- Domain-Driven Design and Clean Architecture
+- Test-Driven Development
+- SOLID principles and design patterns
+- Modern PHP development
+- Building scalable and maintainable systems
+
+I'm passionate about creating high-quality software that solves real business problems while maintaining technical excellence.

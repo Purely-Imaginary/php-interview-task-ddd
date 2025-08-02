@@ -68,7 +68,7 @@ The project demonstrates a comprehensive testing approach:
 
 1. Clone the repository:
    ```
-   git clone [repository-url]
+   git clone https://github.com/Purely-Imaginary/php-interview-task-ddd
    ```
 
 2. Install dependencies:
